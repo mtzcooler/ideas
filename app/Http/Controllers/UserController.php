@@ -11,7 +11,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public static function show(User $user)
     {
         $ideas = $user->ideas()->paginate(5);
 
@@ -43,7 +43,7 @@ class UserController extends Controller
         if (request()->has('avatar')) {
             $imagePath = request()->file('avatar')->store('profile', 'public');
             $validated['avatar'] = $imagePath;
-            Storage::disk('public')->delete($user->avatar);
+            Storage::disk('public')->delete($user->avatar ?? '');
         }
 
         $user->update($validated);
@@ -51,8 +51,19 @@ class UserController extends Controller
         return redirect()->route('profile')->with('success', 'User updated successfully!');
     }
 
-    public function profile()
+    public function follow(User $user)
     {
-        return $this->show(Auth::user());
+        $follower = Auth::user();
+        $follower->followings()->attach($user);
+
+        return redirect()->route('users.show', $user->id)->with('success', 'Followed successfully!');
+    }
+
+    public function unfollow(User $user)
+    {
+        $follower = Auth::user();
+        $follower->followings()->detach($user);
+
+        return redirect()->route('users.show', $user->id)->with('success', 'Unfollowed successfully!');
     }
 }

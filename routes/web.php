@@ -33,10 +33,14 @@ Route::group([], function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->middleware('throttle:login');;
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth')->name('profile');
 });
 
+// Route::group(['prefix' => 'ideas/', 'as' => 'ideas.'], function () {
 Route::resource('users', UserController::class)->only(['show', 'edit', 'update'])->middleware('auth');
-Route::get('/profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
+Route::post('users/{user}/follow', [UserController::class, 'follow'])->middleware('auth')->name('users.follow');
+Route::post('users/{user}/unfollow', [UserController::class, 'unfollow'])->middleware('auth')->name('users.unfollow');
 
 Route::get('/terms', function () {
     return view('terms');

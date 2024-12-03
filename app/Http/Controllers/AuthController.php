@@ -61,4 +61,9 @@ class AuthController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Logged out successfully!');
     }
+
+    public function profile()
+    {
+        return UserController::show(Auth::user());
+    }
 }
