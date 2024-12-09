@@ -20,11 +20,15 @@ class Idea extends Model
         'likes',
     ];
 
-    public function user() {
+    protected $with = ['user',];
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
 }
