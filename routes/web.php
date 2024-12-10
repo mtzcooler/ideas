@@ -41,7 +41,8 @@ Route::group([], function () {
 });
 
 // Route::group(['prefix' => 'ideas/', 'as' => 'ideas.'], function () {
-Route::resource('users', UserController::class)->only(['show', 'edit', 'update'])->middleware('auth');
+Route::resource('users', UserController::class)->only(['show']);
+Route::resource('users', UserController::class)->only(['edit', 'update'])->middleware('auth');
 Route::post('users/{user}/follow', [UserController::class, 'follow'])->middleware('auth')->name('users.follow');
 Route::post('users/{user}/unfollow', [UserController::class, 'unfollow'])->middleware('auth')->name('users.unfollow');
 
