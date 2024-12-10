@@ -72,6 +72,16 @@ class User extends Authenticatable
         return $this->followings()->where('user_id', $user->id)->exists();
     }
 
+    public function like()
+    {
+        return $this->belongsToMany(Idea::class, 'idea_like', 'user_id', 'idea_id');
+    }
+
+    public function likes(Idea $idea)
+    {
+        return $this->like()->where('idea_id', $idea->id)->exists();
+    }
+
     public function getUsername()
     {
         return explode('@', $this->email)[0];

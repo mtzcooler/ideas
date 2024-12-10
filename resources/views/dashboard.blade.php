@@ -9,10 +9,10 @@
         <div class="col-6">
             @include('shared.success-msg')
             @include('shared.error-msg')
-            @include('shared.submit-idea')
+            @include('ideas.submit-idea')
             @forelse ($ideas as $idea)
             <div class="mt-3">
-                @include('shared.idea-card')
+                @include('ideas.idea-card')
             </div>
             @empty
             <p class="text-center mt-3">No results found.</p>

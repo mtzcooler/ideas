@@ -19,6 +19,9 @@ Route::group(['prefix' => 'ideas/', 'as' => 'ideas.'], function () {
         Route::post('/{idea}', [IdeaController::class, 'destroy'])->name('destroy');
 
         Route::post('/{idea}/comments', [CommentController::class, 'store'])->name('comments.store');
+
+        Route::post('/{idea}/like', [IdeaController::class, 'like'])->middleware('auth')->name('like');
+        Route::post('/{idea}/unlike', [IdeaController::class, 'unlike'])->middleware('auth')->name('unlike');
     });
 });
 
